@@ -1,0 +1,41 @@
+@import "../../../styles.scss";
+
+.content {
+  margin-top: 25px;
+  overflow-y: scroll;
+  &__text {
+    font-size: 33px;
+    font-weight: 700;
+  }
+
+  &__cards {
+    padding: 32px 0px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-rows: auto;
+    gap: 30px;
+  }
+}
+
+.exploring {
+  @include flex-center;
+  flex-direction: column;
+  gap: 15px;
+
+  &__text {
+    color: black;
+    font-weight: 500;
+  }
+
+  &__button {
+    padding: 9px 10px;
+    background-color: $color-semi-dark-blue;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-semi-dark-gray;
+    }
+  }
+}

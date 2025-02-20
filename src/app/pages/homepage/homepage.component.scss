@@ -1,0 +1,24 @@
+@import "../../../styles.scss";
+
+.homepage {
+  padding: 10px 27px;
+  min-height: 100vh;
+  position: relative;
+
+  @include respond-to-min("md") {
+    padding: 20px 100px;
+  }
+
+  &__header {
+    background-color: white;
+    position: sticky;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 10px 27px;
+
+    @include respond-to-min("md") {
+      padding: 22px 100px;
+    }
+  }
+}

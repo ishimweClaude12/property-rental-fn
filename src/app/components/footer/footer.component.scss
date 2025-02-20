@@ -1,0 +1,43 @@
+@import "../../../styles.scss";
+
+.footer {
+  @include flex-start;
+  flex-direction: column;
+  font-size: 11px;
+  font-weight: 400;
+  @include respond-to-min("md") {
+    @include flex-between;
+    flex-direction: row;
+  }
+
+  &__left {
+    @include flex-start;
+    align-items: start;
+    flex-direction: column;
+    gap: 10px;
+    
+    @include respond-to-min('md'){
+        align-items: center;
+        flex-direction: row;
+    }
+
+    &__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: $color-semi-dark-gray;
+      margin-right: 10px;
+      opacity: 0.5;
+    }
+  }
+  &__right {
+    @include flex-start;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+
+    &__dropdown {
+      cursor: pointer;
+    }
+  }
+}
