@@ -1,0 +1,62 @@
+<app-auth-layout>
+  <section page-form>
+    <app-input
+      type="TEXT"
+      id="name"
+      name="name"
+      [hasLabel]="true"
+      label="Name"
+      placeholder="Enter your name"
+    ></app-input>
+    <app-input
+      type="SELECT"
+      id="sel"
+      name="sel"
+      [hasLabel]="true"
+      label="Select"
+      placeholder="--Select--"
+    ></app-input>
+    <app-input
+      type="PASSWORD"
+      id="psw"
+      name="psw"
+      [hasLabel]="true"
+      label="Password"
+      placeholder="Enter your password"
+      [hasTrailingIcon]="true"
+      (trailingIconClick)="showPassword($event)"
+    ></app-input>
+    <app-input
+      type="DATE"
+      id="date"
+      name="date"
+      [hasLabel]="true"
+      label="Date"
+      [hasTrailingIcon]="false"
+      (trailingIconClick)="showPassword($event)"
+    ></app-input>
+    <app-input
+      type="FILE"
+      id="file"
+      name="file"
+      [hasLabel]="true"
+      label="File"
+      [hasTrailingIcon]="false"
+    ></app-input>
+
+    <app-input
+      [label]="'Username'"
+      [hasLabel]="true"
+      [type]="'TEXT'"
+      name="username"
+      id="username"
+      [placeholder]="'Enter your username'"
+      [hasLeadingIcon]="true"
+      [leadingIcon]="'./assets/icons/search.svg'"
+      [hasTrailingIcon]="true"
+      [trailingIcon]="'./assets/icons/search.svg'"
+      [hasError]="true"
+      [error]="'errorMessage'"
+    ></app-input>
+  </section>
+</app-auth-layout>

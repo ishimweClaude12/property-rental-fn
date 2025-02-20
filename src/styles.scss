@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@theme {
+  --font-lora: Lora, serif;
+  --font-inter: Inter, serif;
+  --color-mint-500: oklch(0.72 0.11 178);
+  --color-danger: #ee5f5f;
+  --color-success: #2dce89;
+  --color-warning: #f7b924;
+  --color-info: #11cdef;
+  --color-dark: #000;
+  --color-light: #fff;
+  --color-gray-100: #f6f9fc;
+  --color-gray-200: #e9ecef;
+  --color-dark-blue: #012556;
+  --color-semi-dark-blue: #225395;
+  --color-dark-gray: #6c757d;
+  --color-semi-dark-gray: #495057;
+  --color-light-gray: #f8f9fa;
+  --color-semi-light-gray: #e9ecef;
+  --color-white: #fff;
+}
+
+.font-lora {
+  font-family: "Lora", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}

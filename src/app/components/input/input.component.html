@@ -1,0 +1,48 @@
+<div>
+  <label *ngIf="hasLabel" [for]="id">{{ label }}</label>
+  <br />
+  <div
+    class="flex border border-gray px-2 py-1 rounded-md gap-1"
+    [ngClass]="customStyles"
+  >
+    <span
+      *ngIf="hasLeadingIcon"
+      class="leading-icon"
+      (click)="onLeadingIconClick($event)"
+    >
+      <img *ngIf="leadingIcon" [src]="leadingIcon" alt="Leading Icon" />
+    </span>
+    <input
+      [type]="type"
+      class="outline-none"
+      [name]="name"
+      [id]="id"
+      [placeholder]="placeholder"
+      [(ngModel)]="value"
+      (change)="onInputChange($event)"
+      (blur)="onInputBlur($event)"
+      (focus)="onInputFocus($event)"
+      (keyup)="onInputKeyUp($event)"
+      (keydown)="onInputKeyDown($event)"
+      (keypress)="onInputKeyPress($event)"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [required]="required"
+      [maxlength]="maxLength"
+      [minlength]="minLength"
+      [pattern]="pattern"
+      [autocomplete]="autocomplete"
+      [autofocus]="autofocus"
+    />
+    <span
+      *ngIf="hasTrailingIcon"
+      class="trailing-icon"
+      (click)="onTrailingIconClick($event)"
+    >
+      <img *ngIf="trailingIcon" [src]="trailingIcon" alt="Trailing Icon" />
+    </span>
+  </div>
+  <div *ngIf="hasError && error" class="error-message">
+    <h3 class="text-danger">{{ error }}</h3>
+  </div>
+</div>
