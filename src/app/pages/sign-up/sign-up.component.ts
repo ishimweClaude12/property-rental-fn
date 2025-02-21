@@ -14,6 +14,7 @@ import {
 import { AuthService } from '../../services/auth/auth.service';
 import { UserInterface } from '../../models/auth.interfaces';
 import { ToastrService } from 'ngx-toastr';
+import { LoaderComponent } from '../../components/loader/loader.component';
 
 @Component({
   selector: 'app-sign-up',
@@ -23,6 +24,7 @@ import { ToastrService } from 'ngx-toastr';
     InputComponent,
     ButtonComponent,
     ReactiveFormsModule,
+    LoaderComponent,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -30,13 +32,15 @@ import { ToastrService } from 'ngx-toastr';
 export class SignUpComponent {
   passwordVisible: boolean = false;
   ConfirmPasswordVisible = false;
-
+  isLoading: boolean = false;
+  error: string = '';
+  selectedFile: File | null = null; // Store the selected file
   form: FormGroup = this.fb.group(
     {
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      phoneNumber: [''],
-      avatar: [File],
+      phoneNumber: ['', [Validators.required]],
+      avatar: [File, [Validators.required]],
       password: [
         '',
         [
@@ -66,6 +70,11 @@ export class SignUpComponent {
     return null;
   }
 
+  onFileChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const file: File = (target.files as FileList)[0];
+    this.selectedFile = file;
+  }
   showPassword(event: Event) {
     event.preventDefault();
     this.passwordVisible = !this.passwordVisible;
@@ -81,31 +90,39 @@ export class SignUpComponent {
   }
 
   signUp(): void {
-    if (this.form.invalid) {
+    if (this.form.invalid || !this.selectedFile) {
       this.form.markAllAsTouched();
+      if (!this.selectedFile) {
+        this.error = 'Profile image is required';
+      }
     } else {
-      const { name, email, phoneNumber, avatar, password } = this.form.value;
+      const { name, email, phoneNumber, password } = this.form.value;
+      this.isLoading = true;
 
       const user: UserInterface = {
         name,
         email,
         phoneNumber,
-        avatar,
+        avatar: this.selectedFile, // Use the selected file
         password,
         confirmPassword: this.form.get('confirmPassword')?.value,
       };
+
       this.authService.signUp(user).subscribe(
         (res) => {
-          console.log(res);
+          this.isLoading = false;
+          const token = res.token;
+          localStorage.setItem('token', token ?? '');
           this.router.navigate(['/sign-in']);
+          this.toastr.success('Registration successful', 'Success');
         },
         (err) => {
-          this.toastr.error(err.error.message, 'Error');
+          this.isLoading = false;
+          this.error = err.error.message;
         }
       );
     }
   }
-
   isControleInvalid(controlName: string): boolean {
     const control = this.form.get(controlName);
 
@@ -121,14 +138,6 @@ export class SignUpComponent {
   }
 
   continueWithGoogle(): void {
-    this.authService.continueWithGoogle().subscribe(
-      (res) => {
-        console.log(res);
-        this.router.navigate(['/sign-in']);
-      },
-      (err) => {
-        this.toastr.error(err.error.message, 'Error');
-      }
-    );
+    this.authService.continueWithGoogle();
   }
 }

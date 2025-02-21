@@ -1,15 +1,20 @@
 <app-auth-layout>
-  <section class="flex flex-col gap-2 bg-white rounded-md p-8" page-form>
+  <section
+    class="flex flex-col gap-2 bg-white rounded-md p-8"
+    [formGroup]="form"
+    page-form
+  >
     <h1 class="text-2xl font-bold text-center text-indingo-500">Sign In</h1>
 
     <app-input
       type="EMAIL"
       id="email"
+      formControlName="email"
+      [hasError]="isControleInvalid('email')"
+      error="Email is required"
       name="email"
-      [hasLabel]="false"
+      [hasLabel]="true"
       label="Email"
-      [hasError]="true"
-      [error]="'Email is required'"
       placeholder="Enter your email"
     ></app-input>
 
@@ -17,6 +22,9 @@
       type="PASSWORD"
       id="psw"
       name="password"
+      formControlName="password"
+      [hasError]="isControleInvalid('password')"
+      error="Password is required"
       [hasLabel]="true"
       label="Password"
       [hasTrailingIcon]="true"
@@ -32,9 +40,12 @@
     <app-input
       type="PASSWORD"
       id="confirmPsw"
+      formControlName="confirmPassword"
       name="confirmPsw"
       [hasLabel]="true"
       label="Confirm Password"
+      [hasError]="isControleInvalid('confirmPassword')"
+      error="Password does not match"
       [hasTrailingIcon]="true"
       placeholder="Enter your password"
       [trailingIcon]="
@@ -48,12 +59,14 @@
     <app-button
       type="Active"
       label="Sign In"
+      (click)="signIn()"
       size="medium"
       [trailingIcon]="'./assets/icons/submit-icon.svg'"
     ></app-button>
     <app-button
       type="Dormant"
       label="Sign in with google"
+      (click)="signInWithGoogle()"
       size="medium"
       [trailingIcon]="'./assets/icons/google-icon.svg'"
     ></app-button>
@@ -64,5 +77,14 @@
         <a (click)="navigateToSignUp()" class="text-dark-blue">Sign up</a>
       </p>
     </div>
+
+    @if (error) {
+    <div>
+      <p class="text-center text-danger">
+        {{ error }}
+      </p>
+    </div>
+    }
   </section>
 </app-auth-layout>
+<app-loader [loading]="isLoading"></app-loader>

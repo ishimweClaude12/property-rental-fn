@@ -13,7 +13,6 @@ export class AuthService {
 
   signUp(user: any): Observable<RegisterInterface> {
     const formData = new FormData();
-    console.log('user', user);
 
     // Append each key-value pair from the user object to the FormData
     for (const key in user) {
@@ -27,15 +26,21 @@ export class AuthService {
       }
     }
 
-    // Send the FormData in the POST request
     return this.http
       .post<RegisterInterface>(`${this.baseUrl}/auth`, formData)
       .pipe(take(1));
   }
 
   continueWithGoogle() {
+    window.location.href = 'https://lala-eiv6.onrender.com/api/v1/auth/google';
+  }
+
+  signin(email: string, password: string): Observable<RegisterInterface> {
     return this.http
-      .get<RegisterInterface>(`${this.baseUrl}/auth/google`)
+      .post<RegisterInterface>(`${this.baseUrl}/auth/login`, {
+        email,
+        password,
+      })
       .pipe(take(1));
   }
 }

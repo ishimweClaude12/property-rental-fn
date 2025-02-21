@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ButtonTypes } from '../../models/button.types';
 
 @Component({
   selector: 'app-button',
@@ -9,13 +10,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent {
-  @Input() type:
-    | 'Active'
-    | 'Dormant'
-    | 'Disabled'
-    | 'Danger'
-    | 'Pressed'
-    | 'Default' = 'Default';
+  @Input() type: ButtonTypes = 'Default';
   @Input() disabled: boolean = false;
   @Input() leadingIcon: string = '';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';

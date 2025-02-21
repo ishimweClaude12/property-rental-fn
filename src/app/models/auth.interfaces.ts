@@ -20,7 +20,7 @@ export interface UserInterface {
   name: string;
   email: string;
   phoneNumber: string;
-  avatar: string;
+  avatar: string | File;
   password: string;
   confirmPassword: string;
 }

@@ -4,4 +4,5 @@ export type ButtonTypes =
   | 'Disabled'
   | 'Danger'
   | 'Pressed'
-  | 'Default';
+  | 'Default'
+  | 'submit';

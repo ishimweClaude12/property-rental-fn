@@ -1,5 +1,5 @@
 <app-auth-layout>
-  <section
+  <form
     class="flex flex-col gap-2 bg-white rounded-md p-8"
     [formGroup]="form"
     page-form
@@ -40,15 +40,28 @@
       placeholder="Enter your phone number"
       [hasTrailingIcon]="false"
     ></app-input>
-    <app-input
-      type="FILE"
-      id="pp"
-      name="pp"
-      [hasLabel]="true"
-      label="Profile image"
-      [hasTrailingIcon]="true"
-      trailingIcon="./assets/icons/file.svg"
-    ></app-input>
+    <div>
+      <label for="avatar">Profile image</label> <br />
+      <div
+        class="flex justify-between border border-semi-dark-gray rounded-md px-2 py-1"
+      >
+        <input
+          type="file"
+          id="avatar"
+          name="avatar"
+          error="Profile image is required"
+          label="Profile image"
+          (change)="onFileChange($event)"
+        />
+        <span class="icon"
+          ><img src="./assets/icons/file.svg" alt="avatar"
+        /></span>
+      </div>
+    </div>
+    @if (isControleInvalid('avatar')) {
+    <p class="text-danger">Profile image is required</p>
+    }
+
     <app-input
       type="PASSWORD"
       id="psw"
@@ -90,8 +103,8 @@
     <app-button
       type="Active"
       label="Sign Up"
-      (click)="signUp()"
       size="medium"
+      (click)="signUp()"
       [trailingIcon]="'./assets/icons/submit-icon.svg'"
     ></app-button>
     <app-button
@@ -108,5 +121,14 @@
         <a (click)="navigateToLogin()" class="text-dark-blue">Sign In</a>
       </p>
     </div>
-  </section>
+    @if (error) {
+    <div>
+      <p class="text-center text-danger">
+        {{ error }}
+      </p>
+    </div>
+    }
+  </form>
 </app-auth-layout>
+
+<app-loader [loading]="isLoading"></app-loader>
