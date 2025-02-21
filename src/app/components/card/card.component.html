@@ -1,6 +1,6 @@
 <div class="card" (click)="goToPropertyDetails(property().property_id)">
   <div class="card__img">
-    @if(property().propertyImages){
+    @if(property().propertyImages.length > 0 && image()) {
     <img [src]="image()" alt="rental-image" />
     }@else {
     <img [src]="'assets/images/rental-image.png'" alt="dummy-rental-image" />

@@ -10,14 +10,10 @@ import { Router } from '@angular/router';
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
   property = input.required<Property>();
   env = environment;
   router = inject(Router);
-
-  ngOnInit(): void {
-    console.log(this.property().propertyImages[0].url);
-  }
 
   image = computed(() => {
     const extractedImage = this.property().propertyImages[0].url;
