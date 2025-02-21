@@ -1,0 +1,111 @@
+.button-container {
+  display: flex;
+
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+
+  &.button-small {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  &.button-medium {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  &.button-large {
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+
+  &.button-primary {
+    background-color: #007bff;
+    color: white;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+
+  &.button-secondary {
+    background-color: #6c757d;
+    color: white;
+
+    &:hover {
+      background-color: #5a6268;
+    }
+  }
+
+  &.button-outline {
+    background-color: transparent;
+    border: 1px solid #007bff;
+    color: #007bff;
+
+    &:hover {
+      background-color: #007bff;
+      color: white;
+    }
+  }
+
+  &.button-active {
+    background-color: #0b3a6b;
+    color: white;
+  }
+
+  &.button-dormant {
+    background-color: #ffff;
+    border: 2px solid #0b3a6b;
+    color: #0b3a6b;
+
+    &:hover {
+      background-color: #0b3a6b;
+      color: white;
+    }
+  }
+
+  &.button-disabled {
+    background-color: #6c757d;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &.button-danger {
+    background-color: #dc3545;
+    color: white;
+
+    &:hover {
+      background-color: #c82333;
+    }
+  }
+
+  &.button-pressed {
+    background-color: #0056b3;
+    color: white;
+  }
+
+  &.button-default {
+    background-color: #f8f9fa;
+    color: black;
+
+    &:hover {
+      background-color: #e2e6ea;
+    }
+  }
+
+  .button-label {
+    margin: 0;
+  }
+
+  .leading-icon,
+  .trailing-icon {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+  }
+}

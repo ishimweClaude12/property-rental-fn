@@ -1,0 +1,20 @@
+<div
+  class="button-container"
+  [ngClass]="getButtonClasses()"
+  [ngStyle]="getButtonStyles()"
+  (click)="handleClick()"
+>
+  <img
+    *ngIf="leadingIcon"
+    [src]="leadingIcon"
+    alt="leading icon"
+    class="leading-icon"
+  />
+  <h1 class="button-label">{{ label || text }}</h1>
+  <img
+    *ngIf="trailingIcon"
+    [src]="trailingIcon"
+    alt="trailing icon"
+    class="trailing-icon"
+  />
+</div>

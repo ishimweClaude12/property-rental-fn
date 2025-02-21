@@ -1,62 +1,134 @@
 <app-auth-layout>
-  <section page-form>
+  <form
+    class="flex flex-col gap-2 bg-white rounded-md p-8"
+    [formGroup]="form"
+    page-form
+  >
+    <h1 class="text-2xl font-bold text-center text-indingo-500">Sign Up</h1>
+
     <app-input
       type="TEXT"
       id="name"
+      formControlName="name"
       name="name"
       [hasLabel]="true"
+      [hasError]="isControleInvalid('name')"
+      error="Name is required"
       label="Name"
       placeholder="Enter your name"
     ></app-input>
     <app-input
-      type="SELECT"
-      id="sel"
-      name="sel"
+      type="EMAIL"
+      id="email"
+      formControlName="email"
+      [hasError]="isControleInvalid('email')"
+      error="Email is required"
+      name="email"
       [hasLabel]="true"
-      label="Select"
-      placeholder="--Select--"
+      label="Email"
+      placeholder="Enter your email"
     ></app-input>
+    <app-input
+      type="PHONE"
+      id="phone"
+      name="phone"
+      formControlName="phoneNumber"
+      [hasError]="isControleInvalid('phoneNumber')"
+      error="Phone number is required"
+      [hasLabel]="true"
+      label="Phone"
+      placeholder="Enter your phone number"
+      [hasTrailingIcon]="false"
+    ></app-input>
+    <div>
+      <label for="avatar">Profile image</label> <br />
+      <div
+        class="flex justify-between border border-semi-dark-gray rounded-md px-2 py-1"
+      >
+        <input
+          type="file"
+          id="avatar"
+          name="avatar"
+          error="Profile image is required"
+          label="Profile image"
+          (change)="onFileChange($event)"
+        />
+        <span class="icon"
+          ><img src="./assets/icons/file.svg" alt="avatar"
+        /></span>
+      </div>
+    </div>
+    @if (isControleInvalid('avatar')) {
+    <p class="text-danger">Profile image is required</p>
+    }
+
     <app-input
       type="PASSWORD"
       id="psw"
-      name="psw"
+      name="password"
+      formControlName="password"
+      [hasError]="isControleInvalid('password')"
+      error="Password is required"
       [hasLabel]="true"
       label="Password"
-      placeholder="Enter your password"
       [hasTrailingIcon]="true"
+      placeholder="Enter your password"
+      [trailingIcon]="
+        passwordVisible
+          ? './assets/icons/eye.svg'
+          : './assets/icons/eye-slash.svg'
+      "
       (trailingIconClick)="showPassword($event)"
-    ></app-input>
-    <app-input
-      type="DATE"
-      id="date"
-      name="date"
-      [hasLabel]="true"
-      label="Date"
-      [hasTrailingIcon]="false"
-      (trailingIconClick)="showPassword($event)"
-    ></app-input>
-    <app-input
-      type="FILE"
-      id="file"
-      name="file"
-      [hasLabel]="true"
-      label="File"
-      [hasTrailingIcon]="false"
     ></app-input>
 
     <app-input
-      [label]="'Username'"
+      type="PASSWORD"
+      id="confirmPsw"
+      formControlName="confirmPassword"
+      name="confirmPsw"
       [hasLabel]="true"
-      [type]="'TEXT'"
-      name="username"
-      id="username"
-      [placeholder]="'Enter your username'"
-      [hasLeadingIcon]="true"
-      [leadingIcon]="'./assets/icons/search.svg'"
+      label="Confirm Password"
+      [hasError]="isControleInvalid('confirmPassword')"
+      error="Password does not match"
       [hasTrailingIcon]="true"
-      [trailingIcon]="'./assets/icons/search.svg'"
-      [hasError]="true"
-      [error]="'errorMessage'"
+      placeholder="Enter your password"
+      [trailingIcon]="
+        ConfirmPasswordVisible
+          ? './assets/icons/eye.svg'
+          : './assets/icons/eye-slash.svg'
+      "
+      (trailingIconClick)="showConfirmPassword($event)"
     ></app-input>
-  </section>
+
+    <app-button
+      type="Active"
+      label="Sign Up"
+      size="medium"
+      (click)="signUp()"
+      [trailingIcon]="'./assets/icons/submit-icon.svg'"
+    ></app-button>
+    <app-button
+      type="Dormant"
+      label="Continue with google"
+      (click)="continueWithGoogle()"
+      size="medium"
+      [trailingIcon]="'./assets/icons/google-icon.svg'"
+    ></app-button>
+
+    <div>
+      <p class="text-center cursor-pointer">
+        Already have an account?
+        <a (click)="navigateToLogin()" class="text-dark-blue">Sign In</a>
+      </p>
+    </div>
+    @if (error) {
+    <div>
+      <p class="text-center text-danger">
+        {{ error }}
+      </p>
+    </div>
+    }
+  </form>
 </app-auth-layout>
+
+<app-loader [loading]="isLoading"></app-loader>

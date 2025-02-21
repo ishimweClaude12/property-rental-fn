@@ -2,7 +2,7 @@
   <label *ngIf="hasLabel" [for]="id">{{ label }}</label>
   <br />
   <div
-    class="flex border border-gray px-2 py-1 rounded-md gap-1"
+    class="flex justify-between border border-gray px-2 py-1 rounded-md gap-1"
     [ngClass]="customStyles"
   >
     <span
@@ -13,12 +13,11 @@
       <img *ngIf="leadingIcon" [src]="leadingIcon" alt="Leading Icon" />
     </span>
     <input
-      [type]="type"
+      [type]="passwordVisible ? 'text' : type"
       class="outline-none"
       [name]="name"
       [id]="id"
       [placeholder]="placeholder"
-      [(ngModel)]="value"
       (change)="onInputChange($event)"
       (blur)="onInputBlur($event)"
       (focus)="onInputFocus($event)"
@@ -28,8 +27,6 @@
       [disabled]="disabled"
       [readonly]="readonly"
       [required]="required"
-      [maxlength]="maxLength"
-      [minlength]="minLength"
       [pattern]="pattern"
       [autocomplete]="autocomplete"
       [autofocus]="autofocus"

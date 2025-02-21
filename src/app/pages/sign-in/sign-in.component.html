@@ -1,1 +1,90 @@
-<p>sign-in works!</p>
+<app-auth-layout>
+  <section
+    class="flex flex-col gap-2 bg-white rounded-md p-8"
+    [formGroup]="form"
+    page-form
+  >
+    <h1 class="text-2xl font-bold text-center text-indingo-500">Sign In</h1>
+
+    <app-input
+      type="EMAIL"
+      id="email"
+      formControlName="email"
+      [hasError]="isControleInvalid('email')"
+      error="Email is required"
+      name="email"
+      [hasLabel]="true"
+      label="Email"
+      placeholder="Enter your email"
+    ></app-input>
+
+    <app-input
+      type="PASSWORD"
+      id="psw"
+      name="password"
+      formControlName="password"
+      [hasError]="isControleInvalid('password')"
+      error="Password is required"
+      [hasLabel]="true"
+      label="Password"
+      [hasTrailingIcon]="true"
+      placeholder="Enter your password"
+      [trailingIcon]="
+        passwordVisible
+          ? './assets/icons/eye.svg'
+          : './assets/icons/eye-slash.svg'
+      "
+      (trailingIconClick)="showPassword($event)"
+    ></app-input>
+
+    <app-input
+      type="PASSWORD"
+      id="confirmPsw"
+      formControlName="confirmPassword"
+      name="confirmPsw"
+      [hasLabel]="true"
+      label="Confirm Password"
+      [hasError]="isControleInvalid('confirmPassword')"
+      error="Password does not match"
+      [hasTrailingIcon]="true"
+      placeholder="Enter your password"
+      [trailingIcon]="
+        ConfirmPasswordVisible
+          ? './assets/icons/eye.svg'
+          : './assets/icons/eye-slash.svg'
+      "
+      (trailingIconClick)="showConfirmPassword($event)"
+    ></app-input>
+
+    <app-button
+      type="Active"
+      label="Sign In"
+      (click)="signIn()"
+      size="medium"
+      [trailingIcon]="'./assets/icons/submit-icon.svg'"
+    ></app-button>
+    <app-button
+      type="Dormant"
+      label="Sign in with google"
+      (click)="signInWithGoogle()"
+      size="medium"
+      [trailingIcon]="'./assets/icons/google-icon.svg'"
+    ></app-button>
+
+    <div>
+      <p class="text-center cursor-pointer">
+        Don&rsquo;t have an account?
+        <a (click)="navigateToSignUp()" class="text-dark-blue">Sign up</a>
+      </p>
+    </div>
+
+    @if (error) {
+    <div>
+      <p class="text-center text-danger">
+        {{ error }}
+      </p>
+    </div>
+    }
+  </section>
+</app-auth-layout>
+<app-loader [loading]="isLoading"></app-loader>
