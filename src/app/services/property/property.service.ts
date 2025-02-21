@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { PropertyResponse } from '../../models/property-response.model';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { ApiResponse } from '../../models/single-property-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +23,13 @@ export class PropertyService {
 
     const response = await firstValueFrom(properties$);
     return response;
+  };
+
+  getPropertyById = async (id: string): Promise<ApiResponse | undefined> => {
+    const property$ = this.http.get<ApiResponse>(
+      `${this.env.apiRoot}/property/${id}`
+    );
+
+    return firstValueFrom(property$);
   };
 }

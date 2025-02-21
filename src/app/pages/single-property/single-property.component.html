@@ -5,12 +5,15 @@
 
 <div class="content">
   <div class="content__text">
-    Container house on cliff - easy drive from Nairobi!
+    {{ property()?.description }}
   </div>
 
   <div class="content__image-slides">
     <div class="content__image-slides__left">
-      <div class="content__image-slides__left__arrow" (click)="getPreviousImage()"></div>
+      <div
+        class="content__image-slides__left__arrow"
+        (click)="getPreviousImage()"
+      ></div>
     </div>
     <div class="content__image-slides__middle">
       <img
@@ -20,16 +23,19 @@
       />
     </div>
     <div class="content__image-slides__right">
-      <div class="content__image-slides__right__arrow" (click)="getNextImage()"></div>
+      <div
+        class="content__image-slides__right__arrow"
+        (click)="getNextImage()"
+      ></div>
     </div>
   </div>
   <section class="flex justify-evenly gap-4 mt-6 flex-wrap">
     <div>
-      <h2 class="font-bold">Farm stay in Kajiado, Kenya</h2>
+      <h2 class="font-bold">{{ property()?.location }}</h2>
       <div class="flex items-center gap-4">
-        <span> 4 guests</span>
-        <span>2 bedrooms</span>
-        <span>1 bath</span>
+        <span> {{ property()?.maxGuests }} guests</span>
+        <span>{{ property()?.bedrooms }} bedrooms</span>
+        <span>{{ property()?.bathrooms }} bath</span>
       </div>
       <p>⭐ 4.74 reviews</p>
       <div class="bg-black w-full h-[2px] my-2"></div>
@@ -61,7 +67,7 @@
       </div>
     </div>
     <div>
-      <h2 class="font-bold">$ 3000 / night</h2>
+      <h2 class="font-bold">$ {{ property()?.pricePerNight }} night</h2>
       <div class="flex items-center gap-8 mb-6">
         <div class="flex flex-col mt-2">
           <label htmlFor="checkin" class="font-semibold"> Checkin </label>
@@ -81,9 +87,10 @@
       <div class="mt-3">
         <p class="font-bold">Property Amenities</p>
         <ul class="mb-4">
-          <li>Pool</li>
-          <li>Pool</li>
-          <li>Pool</li>
+          @for (amenities of property()?.propertyAmenities; track
+          amenities.amenity_id) {
+          <li>{{ amenities.status }}</li>
+          }
         </ul>
         <button
           class="border-[1px] border-[#225395] px-6 py-1 rounded-md text-white bg-[#225395]"
