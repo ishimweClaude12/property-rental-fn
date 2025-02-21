@@ -12,9 +12,12 @@ export class PropertyService {
   env = environment;
   constructor() {}
 
-  loadAllProperties = async (): Promise<PropertyResponse | undefined> => {
+  loadAllProperties = async (
+    page = 1,
+    size = 1
+  ): Promise<PropertyResponse | undefined> => {
     const properties$ = this.http.get<PropertyResponse>(
-      `${this.env.apiRoot}/property?page=1&limit=2`
+      `${this.env.apiRoot}/property?page=${page}&limit=${size}`
     );
 
     const response = await firstValueFrom(properties$);

@@ -15,20 +15,30 @@ import { LoadingService } from '../../services/loader/loading.service';
 export class HomepageContentComponent {
   properties = signal<Property[]>([]);
   loadingService = inject(LoadingService);
+  page = 1;
+  pageSize = 4;
 
   constructor(private readonly propertyService: PropertyService) {
     afterNextRender(() => {
-      this.loadProperties();
+      this.loadProperties(this.page, this.pageSize);
     });
   }
-  async loadProperties() {
+  async loadProperties(page = 1, size = 1) {
     try {
-      const properties = await this.propertyService.loadAllProperties();
+      const properties = await this.propertyService.loadAllProperties(
+        page,
+        size
+      );
       if (properties && properties.data.length > 0) {
         this.properties.set(properties.data);
       }
     } catch (error) {
       console.error(error);
     }
+  }
+
+  showMore() {
+    this.pageSize = this.pageSize * 2;
+    this.loadProperties(this.page, this.pageSize);
   }
 }
