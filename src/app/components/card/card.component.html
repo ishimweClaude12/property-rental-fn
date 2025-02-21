@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" (click)="goToPropertyDetails(property().property_id)">
   <div class="card__img">
     @if(property().propertyImages){
     <img [src]="image()" alt="rental-image" />

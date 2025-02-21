@@ -1,6 +1,7 @@
-import { Component, computed, input, OnInit } from '@angular/core';
+import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { Property } from '../../models/property-response.model';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card',
@@ -12,14 +13,19 @@ import { environment } from '../../../environments/environment';
 export class CardComponent implements OnInit {
   property = input.required<Property>();
   env = environment;
+  router = inject(Router);
 
   ngOnInit(): void {
     console.log(this.property().propertyImages[0].url);
   }
-  
+
   image = computed(() => {
     const extractedImage = this.property().propertyImages[0].url;
     const removedDot = extractedImage.slice(1);
     return this.env.imageRoot + removedDot;
   });
+
+  goToPropertyDetails(id: string): void {
+    this.router.navigate(['home/property', id]);
+  }
 }
