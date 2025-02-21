@@ -4,8 +4,9 @@
   </div>
 
   <router-outlet />
-
+  @if(loadingService.loading() === false) {
   <div class="homepage__footer">
     <app-footer />
   </div>
+  }
 </div>

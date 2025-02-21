@@ -1,6 +1,6 @@
-import { environment } from './../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { inject, Injectable } from '@angular/core';
-import { PropertyResponse } from '../models/property-response.model';
+import { PropertyResponse } from '../../models/property-response.model';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 

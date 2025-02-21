@@ -1,8 +1,9 @@
-import { afterNextRender, Component, signal } from '@angular/core';
+import { afterNextRender, Component, inject, signal } from '@angular/core';
 import { CardComponent } from '../card/card.component';
-import { PropertyService } from '../../services/property.service';
+import { PropertyService } from '../../services/property/property.service';
 import { Property } from '../../models/property-response.model';
 import { CommonModule } from '@angular/common';
+import { LoadingService } from '../../services/loader/loading.service';
 
 @Component({
   selector: 'app-homepage-content',
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class HomepageContentComponent {
   properties = signal<Property[]>([]);
+  loadingService = inject(LoadingService);
 
   constructor(private readonly propertyService: PropertyService) {
     afterNextRender(() => {

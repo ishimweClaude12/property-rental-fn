@@ -4,12 +4,13 @@
   @if(properties() && properties().length > 0) {
   <div class="content__cards">
     @for (property of properties(); track property.property_id) {
-    <app-card [property]="property"/>
+    <app-card [property]="property" />
     }
   </div>
-  }@else {
+  } @if(loadingService.loading() === false && properties() &&
+  properties().length <= 0) {
   <div class="content__error">No properties found</div>
-  }
+  } @if(properties() && properties().length > 0) {
 
   <div
     class="exploring"
@@ -20,4 +21,5 @@
     <div class="exploring__text">Continue exploring amazing views</div>
     <div class="exploring__button">Show More</div>
   </div>
+  }
 </div>

@@ -16,7 +16,7 @@
     top: 0;
     left: 0;
     padding: 10px 27px;
-    z-index: 900;
+    z-index: 60;
 
     @include respond-to-min("md") {
       padding: 22px 100px;
