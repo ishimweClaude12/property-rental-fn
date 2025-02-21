@@ -1,9 +1,13 @@
 <div class="card">
   <div class="card__img">
-    <img src="assets/images/rental-image.png" alt="rental-image" />
+    @if(property().propertyImages){
+    <img [src]="image()" alt="rental-image" />
+    }@else {
+    <img [src]="'assets/images/rental-image.png'" alt="dummy-rental-image" />
+    }
   </div>
   <div class="card__location-rating">
-    <div class="card__location-rating__location">Nyarutarama, Kigali</div>
+    <div class="card__location-rating__location">{{ property().location }}</div>
     <div class="card__location-rating__rating">
       <div class="card__location-rating__rating-icon"></div>
       <p class="card__location-rating__rating-number">4.3</p>
@@ -11,8 +15,13 @@
   </div>
 
   <div class="card__body">
-    <div class="card__body__name">Beach and garden views</div>
-    <div class="card__body__date">Mar 2 - 7</div>
-    <div class="card__body__price"><span class="card__body__price-number">$26</span> night</div>
+    <div class="card__body__name">{{ property().title }}</div>
+    <div class="card__body__date">{{ property().createdAt }}</div>
+    <div class="card__body__price">
+      <span class="card__body__price-number"
+        >$ {{ property().pricePerNight }}</span
+      >
+      night
+    </div>
   </div>
 </div>

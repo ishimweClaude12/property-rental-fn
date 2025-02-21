@@ -15,12 +15,24 @@
     grid-template-rows: auto;
     gap: 30px;
   }
+
+  &__error {
+    font-size: 20px;
+    font-weight: 500;
+    color: $primary-70;
+  }
 }
 
 .exploring {
   @include flex-center;
   flex-direction: column;
   gap: 15px;
+
+  @include respond-to-min("md") {
+    &--margin {
+      margin-top: 300px;
+    }
+  }
 
   &__text {
     color: black;
