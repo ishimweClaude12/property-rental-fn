@@ -85,6 +85,9 @@
     </div>
     <div [formGroup]="bookingForm!">
       <h2 class="font-bold">$ {{ property()?.pricePerNight }} night</h2>
+      @if(invalidBookingForm()){
+      <h2 class="font-bold invalid-dates">Invalid dates</h2>
+      }
       <div class="flex items-center gap-8 mb-6">
         <div class="flex flex-col mt-2">
           <label htmlFor="checkin" class="font-semibold"> Checkin </label>
@@ -116,7 +119,7 @@
           min="1"
           [max]="property()?.maxGuests || 4"
           class="cursor-pointer"
-          formControlName="guests"
+          formControlName="guestCount"
         />
       </div>
       <div class="mt-3">

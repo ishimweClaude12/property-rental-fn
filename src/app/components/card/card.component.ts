@@ -21,7 +21,7 @@ export class CardComponent {
       extractedImage: extractedImage,
       'Whole image': this.env.imgRoot + extractedImage,
     });
-    return this.env.imgRoot + extractedImage;
+    return extractedImage;
   });
 
   goToPropertyDetails(id: string): void {

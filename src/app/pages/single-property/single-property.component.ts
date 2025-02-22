@@ -15,6 +15,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MessageConversationService } from '../../services/message-conversation/message-conversation.service';
 import { ConversationMessageErrorResponse } from '../../models/conversation-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BookingService } from '../../services/booking/booking.service';
+import { BookingRequest } from '../../models/booking.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-single-property',
@@ -30,9 +33,12 @@ export class SinglePropertyComponent implements OnInit {
   imageLength: number = 0;
   property = signal<Property | null>(null);
   env = environment;
+  invalidBookingForm = signal<boolean>(false);
 
   route = inject(ActivatedRoute);
   fb = inject(FormBuilder);
+  bookingService = inject(BookingService);
+  toastr = inject(ToastrService);
   messageForm: FormGroup | undefined;
   bookingForm: FormGroup | undefined;
   messageConversationService = inject(MessageConversationService);
@@ -45,7 +51,7 @@ export class SinglePropertyComponent implements OnInit {
     this.bookingForm = this.fb.group({
       checkIn: [''],
       checkOut: [''],
-      guests: ['1'],
+      guestCount: ['1'],
     });
     effect(() => {
       console.log('property', this.property());
@@ -56,6 +62,7 @@ export class SinglePropertyComponent implements OnInit {
       console.log('image index', this.imageIndex());
       console.log('images', this.images());
       console.log('image string', this.getImageString());
+      console.log('form boolean: ', this.invalidBookingForm());
     });
   }
 
@@ -63,7 +70,7 @@ export class SinglePropertyComponent implements OnInit {
     this.property.set(this.route.snapshot.data['property']);
     if (this.property() && this.property()!.propertyImages) {
       for (const image of this.property()!.propertyImages) {
-        this.images.set([...(this.images() || []), image.url.slice(1)]);
+        this.images.set([...(this.images() || []), image.url]);
       }
     }
     this.imageLength = this.images()?.length || 0;
@@ -94,7 +101,7 @@ export class SinglePropertyComponent implements OnInit {
 
   getImageString = computed(() => {
     const images = this.images();
-    if (images) return this.env.imgRoot + '/' + images[this.imageIndex()];
+    if (images) return images[this.imageIndex()];
     return '';
   });
 
@@ -113,6 +120,7 @@ export class SinglePropertyComponent implements OnInit {
               content
             );
           console.log('Message sent', messageResponse);
+          this.toastr.success('Message sent');
         } catch (error) {
           console.error('Error posting message', error);
         }
@@ -120,13 +128,9 @@ export class SinglePropertyComponent implements OnInit {
     } catch (error: unknown) {
       if (error instanceof HttpErrorResponse) {
         const errorResponse = error.error as ConversationMessageErrorResponse;
-        if (
-          error.status === 400 &&
-          errorResponse.success === false &&
-          errorResponse.message ===
-            'Conversations alredy exist. on property between the users.'
-        ) {
+        if (error.status === 400 && errorResponse.success === false) {
           console.log('Conversation already exist');
+          this.toastr.error(errorResponse.message);
         }
       }
     }
@@ -140,7 +144,39 @@ export class SinglePropertyComponent implements OnInit {
     return;
   }
 
-  book() {
+  async book() {
+    console.log(this.bookingForm?.get('checkIn')?.value.length > 0);
     console.log('Booked values', this.bookingForm?.value);
+    const formValues = this.bookingForm?.value;
+    const formValuesToSend: BookingRequest = {
+      property_id: this.property()?.property_id,
+      ...formValues,
+    };
+    console.log('Booked values to send', formValuesToSend);
+    if (
+      this.bookingForm?.get('checkIn')?.value.length > 0 &&
+      this.bookingForm?.get('checkOut')?.value.length > 0
+    ) {
+      try {
+        this.invalidBookingForm.set(false);
+        console.log('invalidBookingForm', this.invalidBookingForm());
+        const response = await this.bookingService.createBooking(
+          formValuesToSend
+        );
+        console.log('Booking response', response);
+        this.toastr.success('Booking successful');
+      } catch (error) {
+        if (error instanceof HttpErrorResponse) {
+          const errorResponse = error.error as ConversationMessageErrorResponse;
+          if (error.status === 401 && errorResponse.success === false) {
+            console.log('Conversation already exist', error);
+            this.toastr.error(errorResponse.message);
+          }
+        }
+      }
+    } else {
+      this.invalidBookingForm.set(true);
+      console.log('invalidBookingForm', this.invalidBookingForm());
+    }
   }
 }
