@@ -54,7 +54,6 @@ export class AddImagesComponent implements OnInit {
   }
 
   saveImages(): void {
-
     this.propertyService
       .savePropertyImages(this.propertyId, this.images)
       .subscribe({
