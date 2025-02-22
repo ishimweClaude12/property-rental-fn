@@ -113,7 +113,7 @@ export class SignUpComponent {
           this.isLoading = false;
           const token = res.token;
           localStorage.setItem('token', token ?? '');
-          this.router.navigate(['/sign-in']);
+          this.router.navigate(['/home']);
           this.toastr.success('Registration successful', 'Success');
         },
         (err) => {

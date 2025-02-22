@@ -1,0 +1,141 @@
+<section class="w-full flex justify-center flex-col px-[200px]">
+  <div class="w-1/3 grid grid-col gap-2" [formGroup]="form">
+    <h1 class="text-dark-blue">Please describe your property</h1>
+
+    <!-- Title -->
+    <app-input
+      type="TEXT"
+      id="title"
+      formControlName="title"
+      name="title"
+      [hasLabel]="true"
+      [hasError]="isControlInvalid('title')"
+      error="Title is required and must be less than 100 characters"
+      label="Property title"
+      placeholder="Enter property title"
+    ></app-input>
+
+    <!-- Description -->
+    <app-input
+      type="TEXT"
+      id="description"
+      formControlName="description"
+      name="description"
+      [hasLabel]="true"
+      [hasError]="isControlInvalid('description')"
+      error="Description must be less than 500 characters"
+      label="Property description"
+      placeholder="Enter property description"
+    ></app-input>
+
+    <!-- Price per night -->
+    <app-input
+      type="NUMBER"
+      id="pricePerNight"
+      formControlName="pricePerNight"
+      name="pricePerNight"
+      [hasLabel]="true"
+      [hasError]="isControlInvalid('pricePerNight')"
+      error="Price per night is required and must be a positive number"
+      label="Price per night"
+      placeholder="Enter price per night"
+    ></app-input>
+
+    <!-- Location -->
+    <app-input
+      type="TEXT"
+      id="location"
+      formControlName="location"
+      name="location"
+      [hasLabel]="true"
+      [hasError]="isControlInvalid('location')"
+      error="Location is required and must be less than 200 characters"
+      label="Location"
+      placeholder="Enter property location"
+    ></app-input>
+
+    <!-- Maximum guests -->
+    <app-input
+      type="NUMBER"
+      id="maxGuests"
+      formControlName="maxGuests"
+      name="maxGuests"
+      [hasLabel]="true"
+      [hasError]="isControlInvalid('maxGuests')"
+      error="Maximum guests is required and must be at least 1"
+      label="Maximum guests"
+      placeholder="Enter maximum number of guests"
+    ></app-input>
+
+    <!-- Bathrooms -->
+    <app-input
+      type="NUMBER"
+      id="bathrooms"
+      formControlName="bathrooms"
+      name="bathrooms"
+      [hasLabel]="true"
+      [hasError]="isControlInvalid('bathrooms')"
+      error="Number of bathrooms is required and must be at least 1"
+      label="Bathrooms"
+      placeholder="Enter number of bathrooms"
+    ></app-input>
+
+    <!-- Bedrooms -->
+    <app-input
+      type="NUMBER"
+      id="bedrooms"
+      formControlName="bedrooms"
+      name="bedrooms"
+      [hasLabel]="true"
+      [hasError]="isControlInvalid('bedrooms')"
+      error="Number of bedrooms is required and must be at least 1"
+      label="Bedrooms"
+      placeholder="Enter number of bedrooms"
+    ></app-input>
+
+    <!-- Latitude -->
+    <app-input
+      type="NUMBER"
+      id="latitude"
+      formControlName="latitude"
+      name="latitude"
+      [hasLabel]="true"
+      [hasError]="isControlInvalid('latitude')"
+      error="Latitude is required and must be between -90 and 90"
+      label="Latitude"
+      placeholder="Enter latitude"
+    ></app-input>
+
+    <!-- Longitude -->
+    <app-input
+      type="NUMBER"
+      id="longitude"
+      formControlName="longitude"
+      name="longitude"
+      [hasLabel]="true"
+      [hasError]="isControlInvalid('longitude')"
+      error="Longitude is required and must be between -180 and 180"
+      label="Longitude"
+      placeholder="Enter longitude"
+    ></app-input>
+
+    <div class="flex justify-between">
+      <div>
+        <div
+          *ngIf="error"
+          class="px-2 py-1 bg-danger text-white rounded-sm flex justify-between gap-4 items-center"
+        >
+          <h1 class="font-lora text-3xl">!</h1>
+          <h2>{{ error }}</h2>
+        </div>
+      </div>
+      <app-button
+        type="Active"
+        label="Next"
+        size="medium"
+        (click)="createProperty()"
+        [trailingIcon]="'./assets/icons/submit-icon.svg'"
+      ></app-button>
+    </div>
+  </div>
+</section>

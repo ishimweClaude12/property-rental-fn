@@ -1,10 +1,22 @@
-import { afterNextRender, Component, inject, signal } from '@angular/core';
+import {
+  closeDropdown,
+  toggleDropdown,
+} from './../../store/counter/app/app.actions';
+import {
+  afterNextRender,
+  Component,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { CardComponent } from '../card/card.component';
 import { PropertyService } from '../../services/property/property.service';
 import { Property } from '../../models/property-response.model';
 import { CommonModule } from '@angular/common';
 import { LoadingService } from '../../services/loader/loading.service';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../store/counter/app/app.reducer';
 @Component({
   selector: 'app-homepage-content',
   standalone: true,
@@ -12,15 +24,40 @@ import { LoadingService } from '../../services/loader/loading.service';
   templateUrl: './homepage-content.component.html',
   styleUrl: './homepage-content.component.scss',
 })
-export class HomepageContentComponent {
+export class HomepageContentComponent implements OnInit {
   properties = signal<Property[]>([]);
   loadingService = inject(LoadingService);
   page = 1;
   pageSize = 4;
 
-  constructor(private readonly propertyService: PropertyService) {
+  constructor(
+    private readonly propertyService: PropertyService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly store: Store<AppState>
+  ) {
     afterNextRender(() => {
       this.loadProperties(this.page, this.pageSize);
+    });
+  }
+
+  ngOnInit(): void {
+    // Extract query parameters
+    this.route.queryParams.subscribe((params) => {
+      const token = params['token'];
+      const user = params['user'];
+
+      if (token && user) {
+        // Decode the user object
+        const decodedUser = JSON.parse(decodeURIComponent(user));
+
+        // Store token and user data in localStorage
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(decodedUser));
+
+        // Redirect to dashboard
+        this.router.navigate(['/home/property']);
+      }
     });
   }
   async loadProperties(page = 1, size = 1) {
@@ -35,6 +72,10 @@ export class HomepageContentComponent {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  onToggleDropdown(): void {
+    this.store.dispatch(closeDropdown());
   }
 
   showMore() {

@@ -1,0 +1,55 @@
+<section class="flex justify-between custom-height">
+  <!-- File Upload Section -->
+  <div class="flex justify-center items-center">
+    <div
+      class="border border-4 border-semi-dark-blue border-dashed rounded-md p-8 flex flex-col justify-center items-center relative"
+    >
+      <input
+        type="file"
+        name="images"
+        id="images"
+        class="file-input"
+        (change)="onFileSelected($event)"
+        multiple
+        accept="image/jpeg, image/jpg, image/png, image/svg"
+      />
+      <span class="icon">
+        <img src="./assets/icons/download.svg" alt="upload" />
+      </span>
+      <h2>Upload your house pictures</h2>
+      <p>Only JPEG, JPG, PNG and SVG</p>
+    </div>
+  </div>
+
+  <!-- Image Preview Section -->
+  <div class="file-preview-container">
+    <div class="grid grid-cols-3 gap-4 p-4">
+      <div
+        *ngFor="let preview of imagePreviews; let i = index"
+        class="relative"
+      >
+        <img
+          [src]="preview"
+          alt="Preview"
+          class="w-full h-32 object-cover rounded-md"
+        />
+        <button
+          class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center"
+          (click)="removeImage(i)"
+        >
+          &times;
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Next Button -->
+<div class="flex justify-end mt-4">
+  <button
+    class="bg-blue-500 text-white px-4 py-2 rounded-md"
+    (click)="saveImages()"
+  >
+    Next
+  </button>
+</div>

@@ -16,9 +16,9 @@ export class CardComponent {
   router = inject(Router);
 
   image = computed(() => {
-    const extractedImage = this.property().propertyImages[0].url;
+    const extractedImage = this.property().propertyImages[0]?.url ?? '';
     const removedDot = extractedImage.slice(1);
-    return this.env.imageRoot + removedDot;
+    return this.env.imageRoot + extractedImage;
   });
 
   goToPropertyDetails(id: string): void {
