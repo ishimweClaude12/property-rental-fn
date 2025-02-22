@@ -47,9 +47,6 @@ export class HomepageContentComponent implements OnInit {
       const token = params['token'];
       const user = params['user'];
 
-      console.log('Token:', token);
-      console.log('User:', user);
-
       if (token && user) {
         // Decode the user object
         const decodedUser = JSON.parse(decodeURIComponent(user));
@@ -78,7 +75,6 @@ export class HomepageContentComponent implements OnInit {
   }
 
   onToggleDropdown(): void {
-    console.log('I got clicked');
     this.store.dispatch(closeDropdown());
   }
 

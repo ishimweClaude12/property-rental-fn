@@ -7,6 +7,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
 import { ApiResponse } from '../../models/single-property-response.model';
+import { AmenityData, AmenityResponse } from '../../models/amenities.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +65,6 @@ export class PropertyService {
     });
 
     formData.append('property_id', property_id);
-    console.log('formData', formData);
 
     return this.http.post<{ SUCCESS: boolean; message: string }>(
       `${this.env.apiRoot}/images`,
@@ -80,4 +80,23 @@ export class PropertyService {
 
     return firstValueFrom(property$);
   };
+
+  addAmenities(
+    property_id: string,
+    amenity_id: string
+  ): Observable<AmenityResponse<AmenityData>> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No token found');
+    }
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    return this.http.post<AmenityResponse<AmenityData>>(
+      `${this.env.apiRoot}/amenity`,
+      { property_id, amenity_id },
+      { headers }
+    );
+  }
 }

@@ -1,32 +1,40 @@
 <div class="my-[4rem] mx-[2rem]">
+  <h1 class="heading-1">Tell us about what best discribes your home?</h1>
+  <p class="heading-2">
+    "Please take a moment to select each characteristic of your home to provide
+    visitors with a clear and detailed understanding of what they can expect
+    during their stay. By carefully choosing features such as the number of
+    bedrooms, available amenities, unique architectural details, and any special
+    highlights, you’ll help create a vivid and accurate picture of your
+    property. This not only enhances the appeal of your listing but also ensures
+    that guests have the right expectations, leading to a more satisfying and
+    enjoyable experience for everyone involved."
+  </p>
   <!-- Loop through amintyCategories -->
-  <div *ngFor="let amintyCategory of result.data">
+  <div *ngFor="let amintyCategory of data">
     <h1 [id]="amintyCategory.id" class="text-3xl font-bold mb-5">
       {{ amintyCategory?.name }}
     </h1>
     <div class="flex gap-7 flex-wrap mb-10">
       <!-- Loop through amenities -->
-      <div
-        *ngFor="let aminity of amintyCategory.aminity"
-        class="text-[#6896D4] border-[1px] border-[#6896D4] rounded-lg w-fit px-2 py-1 cursor-pointer"
-      >
-        {{ aminity.name }}
+      <div *ngFor="let aminity of amintyCategory.aminity">
+        <app-amenity-card
+          (selected)="onClick(aminity)"
+          [amenity]="aminity"
+        ></app-amenity-card>
       </div>
     </div>
   </div>
 
-  <!-- Skeleton Loading -->
-  <div class="mx-auto p-6 animate-pulse">
-    <div *ngFor="let _ of [1, 2, 3]; let index = index" class="mb-6">
-      <div class="h-6 w-1/2 lg:w-1/4 bg-gray-300 rounded-md mb-3"></div>
-      <div class="flex flex-wrap gap-3">
-        <div
-          *ngFor="
-            let _ of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-          "
-          class="h-8 w-32 bg-gray-300 rounded-md"
-        ></div>
-      </div>
+  <div class="flex justify-end">
+    <div>
+      <app-button
+        type="Active"
+        label="Publish"
+        size="large"
+        (click)="onSubmit()"
+        [trailingIcon]="'./assets/icons/submit-icon.svg'"
+      ></app-button>
     </div>
   </div>
 </div>

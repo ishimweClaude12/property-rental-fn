@@ -54,7 +54,7 @@ export class AddImagesComponent implements OnInit {
   }
 
   saveImages(): void {
-    console.log('Images to save:', this.images);
+
     this.propertyService
       .savePropertyImages(this.propertyId, this.images)
       .subscribe({

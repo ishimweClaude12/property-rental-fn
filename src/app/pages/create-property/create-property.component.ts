@@ -95,7 +95,7 @@ export class CreatePropertyComponent {
     };
     this.propertyService.createProperty(property).subscribe({
       next: (res) => {
-        console.log('property created', res);
+   
         const propertyId = res.data?.property_id;
         this.toastr.success('Property created successfully');
         this.router.navigate(['/home/attach-images', propertyId]);
