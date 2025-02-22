@@ -34,11 +34,18 @@ export class SinglePropertyComponent implements OnInit {
   route = inject(ActivatedRoute);
   fb = inject(FormBuilder);
   messageForm: FormGroup | undefined;
+  bookingForm: FormGroup | undefined;
   messageConversationService = inject(MessageConversationService);
 
   constructor() {
     this.messageForm = this.fb.group({
       name: [''],
+    });
+
+    this.bookingForm = this.fb.group({
+      checkIn: [''],
+      checkOut: [''],
+      guests: ['1'],
     });
     // effect(() => {
     //   console.log('property', this.property());
@@ -123,5 +130,17 @@ export class SinglePropertyComponent implements OnInit {
         }
       }
     }
+  }
+
+  getNumberOfGuests() {
+    const guests = this.bookingForm?.value.guests;
+    if (guests) {
+      return guests;
+    }
+    return;
+  }
+
+  book() {
+    console.log('Booked values', this.bookingForm?.value);
   }
 }
