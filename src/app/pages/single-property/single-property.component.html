@@ -40,13 +40,21 @@
       <p>⭐ 4.74 reviews</p>
       <div class="bg-black w-full h-[2px] my-2"></div>
       <div class="flex gap-5 items-center">
+        @if(property()?.hoster?.avatar){
+        <img
+          class="h-[4rem] rounded-full"
+          [src]="property()?.hoster?.avatar"
+          alt="avatar-image"
+        />
+        }@else {
         <img
           class="h-[4rem] rounded-full"
           src="https://raw.githubusercontent.com/Niyonkurutresor/lala/refs/heads/main/public/files/1739779483297-ReceiptDocument-WhatsApp Image 2023-08-30 at 19.59.57-min.jpg"
-          alt=""
+          alt="avatar-image"
         />
+        }
         <div>
-          <p class="font-bold">Hosted by Meghan</p>
+          <p class="font-bold">Hosted by {{ property()?.hoster?.name }}</p>
           <p>Superhost 10 years hosting</p>
         </div>
       </div>
@@ -59,7 +67,7 @@
           id="content"
         ></textarea>
         <button
-          class="border-[1px] border-[#225395] px-6 py-1 rounded-md text-white bg-[#225395]"
+          class="border-[1px] border-[#225395] px-6 py-1 rounded-md text-white bg-[#225395] cursor-pointer"
           type="submit"
         >
           Message
@@ -89,11 +97,11 @@
         <ul class="mb-4">
           @for (amenities of property()?.propertyAmenities; track
           amenities.amenity_id) {
-          <li>{{ amenities.status }}</li>
+          <li>{{ amenities.aminty?.name }}</li>
           }
         </ul>
         <button
-          class="border-[1px] border-[#225395] px-6 py-1 rounded-md text-white bg-[#225395]"
+          class="border-[1px] border-[#225395] px-6 py-1 rounded-md text-white bg-[#225395] cursor-pointer"
           type="submit"
         >
           Book

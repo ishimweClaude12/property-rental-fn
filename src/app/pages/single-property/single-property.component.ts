@@ -31,6 +31,7 @@ export class SinglePropertyComponent implements OnInit {
   constructor() {
     effect(() => {
       console.log('property', this.property());
+      console.log('property amenity', this.property()?.propertyAmenities[0].aminty);
       console.log('image index', this.imageIndex());
       console.log('images', this.images());
       console.log('image string', this.getImageString());
