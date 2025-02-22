@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  afterNextRender,
   Component,
   computed,
   effect,
@@ -10,11 +11,15 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Property } from '../../models/property-response.model';
 import { environment } from '../../../environments/environment';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MessageConversationService } from '../../services/message-conversation/message-conversation.service';
+import { ConversationMessageErrorResponse } from '../../models/conversation-response.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-single-property',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './single-property.component.html',
   styleUrl: './single-property.component.scss',
 })
@@ -22,20 +27,29 @@ export class SinglePropertyComponent implements OnInit {
   router = inject(Router);
   imageIndex = signal<number>(0);
   images = signal<string[] | undefined>(undefined);
-  imageLength:number = 0;
+  imageLength: number = 0;
   property = signal<Property | null>(null);
   env = environment;
 
   route = inject(ActivatedRoute);
+  fb = inject(FormBuilder);
+  messageForm: FormGroup | undefined;
+  messageConversationService = inject(MessageConversationService);
 
   constructor() {
-    effect(() => {
-      console.log('property', this.property());
-      console.log('property amenity', this.property()?.propertyAmenities[0].aminty);
-      console.log('image index', this.imageIndex());
-      console.log('images', this.images());
-      console.log('image string', this.getImageString());
+    this.messageForm = this.fb.group({
+      name: [''],
     });
+    // effect(() => {
+    //   console.log('property', this.property());
+    //   console.log(
+    //     'property amenity',
+    //     this.property()?.propertyAmenities[0].aminty
+    //   );
+    //   console.log('image index', this.imageIndex());
+    //   console.log('images', this.images());
+    //   console.log('image string', this.getImageString());
+    // });
   }
 
   ngOnInit(): void {
@@ -76,4 +90,38 @@ export class SinglePropertyComponent implements OnInit {
     if (images) return this.env.imageRootSingle + images[this.imageIndex()];
     return '';
   });
+
+  async sendMessage() {
+    const content = this.messageForm?.value.name;
+    try {
+      const response = await this.messageConversationService.postConversation(
+        this.property()?.property_id || ''
+      );
+      const conversationId = response.data.conversation_id;
+      if (conversationId) {
+        try {
+          const messageResponse =
+            await this.messageConversationService.postMessage(
+              conversationId,
+              content
+            );
+          console.log('Message sent', messageResponse);
+        } catch (error) {
+          console.error('Error posting message', error);
+        }
+      }
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse) {
+        const errorResponse = error.error as ConversationMessageErrorResponse;
+        if (
+          error.status === 400 &&
+          errorResponse.success === false &&
+          errorResponse.message ===
+            'Conversations alredy exist. on property between the users.'
+        ) {
+          console.log('Conversation already exist');
+        }
+      }
+    }
+  }
 }
