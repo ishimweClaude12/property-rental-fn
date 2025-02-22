@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { Booking, BookingResponse } from '../../models/booking.types';
 import { environment } from '../../../environments/environment';
+import { BookingRequest } from '../../models/booking.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,27 @@ import { environment } from '../../../environments/environment';
 export class BookingService {
   http = inject(HttpClient);
   baseUrl: string = environment.apiRoot;
-
+  env = environment;
   constructor() {}
+
+  createBooking = async (
+    bookingRequest: BookingRequest
+  ): Promise<BookingResponse<Booking>> => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No token found');
+    }
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const booking$ = this.http.post<BookingResponse<Booking>>(
+      `${this.env.apiRoot}/booking`,
+      bookingRequest,
+      { headers }
+    );
+
+    return firstValueFrom(booking$);
+  };
 
   getBookingHistory(): Observable<BookingResponse<Booking[]>> {
     const token = localStorage.getItem('token');
