@@ -7,7 +7,5 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     },
   });
 
-  console.log('Auth interceptor', localStorage.getItem('token'));
-
   return next(req);
 };

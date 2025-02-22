@@ -15,9 +15,6 @@ export class CardComponent {
   env = environment;
   router = inject(Router);
 
-  ngOnInit(): void {
-    console.log(this.property().propertyImages[0]?.url ?? '');
-  }
   image = computed(() => {
     const extractedImage = this.property().propertyImages[0]?.url ?? '';
     const removedDot = extractedImage.slice(1);
