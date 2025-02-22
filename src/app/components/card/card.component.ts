@@ -17,8 +17,11 @@ export class CardComponent {
 
   image = computed(() => {
     const extractedImage = this.property().propertyImages[0]?.url ?? '';
-    const removedDot = extractedImage.slice(1);
-    return this.env.imageRoot + extractedImage;
+    console.log({
+      extractedImage: extractedImage,
+      'Whole image': this.env.imgRoot + extractedImage,
+    });
+    return this.env.imgRoot + extractedImage;
   });
 
   goToPropertyDetails(id: string): void {

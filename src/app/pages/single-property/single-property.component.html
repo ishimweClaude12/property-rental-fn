@@ -15,12 +15,19 @@
         (click)="getPreviousImage()"
       ></div>
     </div>
-    <div class="content__image-slides__middle">
-      <img
+    <div
+      class="content__image-slides__middle"
+      [ngClass]="{
+        'content__image-slides__middle--no-image': (images()?.length ?? 0) <= 0
+      }"
+    >
+      @if(images()?.length ?? 0 > 0) {<img
         [src]="getImageString()"
         alt="slider-image"
         class="content__image-slides__middle__image-slider"
-      />
+      />} @else{
+      <p>No Images</p>
+      }
     </div>
     <div class="content__image-slides__right">
       <div

@@ -47,16 +47,16 @@ export class SinglePropertyComponent implements OnInit {
       checkOut: [''],
       guests: ['1'],
     });
-    // effect(() => {
-    //   console.log('property', this.property());
-    //   console.log(
-    //     'property amenity',
-    //     this.property()?.propertyAmenities[0].aminty
-    //   );
-    //   console.log('image index', this.imageIndex());
-    //   console.log('images', this.images());
-    //   console.log('image string', this.getImageString());
-    // });
+    effect(() => {
+      console.log('property', this.property());
+      console.log(
+        'property amenity',
+        this.property()?.propertyAmenities[0]?.aminty
+      );
+      console.log('image index', this.imageIndex());
+      console.log('images', this.images());
+      console.log('image string', this.getImageString());
+    });
   }
 
   ngOnInit(): void {
@@ -94,7 +94,7 @@ export class SinglePropertyComponent implements OnInit {
 
   getImageString = computed(() => {
     const images = this.images();
-    if (images) return this.env.imageRootSingle + images[this.imageIndex()];
+    if (images) return this.env.imgRoot + '/' + images[this.imageIndex()];
     return '';
   });
 
