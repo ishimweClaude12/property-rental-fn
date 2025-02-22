@@ -8,6 +8,13 @@ import {
 import { InputComponent } from '../../components/input/input.component';
 import { AuthLayoutComponent } from '../../components/auth-layout/auth-layout.component';
 import { ButtonComponent } from '../../components/button/button.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { PropertyService } from '../../services/property/property.service';
+import { Property } from '../../models/property-response.model';
+import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-property',
@@ -17,6 +24,9 @@ import { ButtonComponent } from '../../components/button/button.component';
     AuthLayoutComponent,
     ButtonComponent,
     ReactiveFormsModule,
+    HeaderComponent,
+    FooterComponent,
+    CommonModule,
   ],
   templateUrl: './create-property.component.html',
   styleUrl: './create-property.component.scss',
@@ -40,7 +50,14 @@ export class CreatePropertyComponent {
     ],
   });
 
-  constructor(private readonly fb: FormBuilder) {}
+  error: string = '';
+
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly propertyService: PropertyService,
+    private readonly toastr: ToastrService,
+    private readonly router: Router
+  ) {}
 
   isControlInvalid(controlName: string): boolean {
     const control = this.form.get(controlName);
@@ -48,7 +65,45 @@ export class CreatePropertyComponent {
   }
 
   createProperty(): void {
-    console.log(this.form.value);
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const {
+      title,
+      description,
+      pricePerNight,
+      location,
+      maxGuests,
+      bathrooms,
+      bedrooms,
+      latitude,
+      longitude,
+    } = this.form.value;
+
+    const property: Partial<Property> = {
+      title,
+      description,
+      pricePerNight,
+      location,
+      maxGuests,
+      bathrooms,
+      bedrooms,
+      latitude,
+      longitude,
+    };
+    this.propertyService.createProperty(property).subscribe({
+      next: (res) => {
+        console.log('property created', res);
+        const propertyId = res.data?.property_id;
+        this.toastr.success('Property created successfully');
+        this.router.navigate(['/home/attach-images', propertyId]);
+      },
+      error: (error) => {
+        this.error = error ?? 'An error occurred. Please try again later.';
+      },
+    });
   }
 
   next(): void {

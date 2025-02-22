@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header" (click)="onCloseDropDown($event)">
   <div class="header__header-logo">
     <img
       src="assets/icons/logo.svg"
@@ -9,12 +9,20 @@
   <div class="header__search">
     <input type="text" class="header__search__input" placeholder="Search..." />
     <div class="header__search__icon">
-        <div class="header__search__icon__search-icon"></div>
+      <div class="header__search__icon__search-icon"></div>
     </div>
   </div>
   <div class="header__header-menu">
-    <div class="header__header-menu__text">Rent your home</div>
-    <div class="header__header-menu__menu-user">
+    <div
+      class="header__header-menu__text cursor-pointer"
+      (click)="navigateToCreateProperty()"
+    >
+      Rent your home now
+    </div>
+    <div
+      class="header__header-menu__menu-user"
+      (click)="onToggleDropdown($event)"
+    >
       <div class="header__header-menu__menu-user__head-menu">
         <img
           src="assets/icons/menu.svg"
@@ -23,12 +31,75 @@
         />
       </div>
       <div class="header__header-menu__menu-user__head-user">
+        @if (user.name) {
+        <p class="avatar">
+          {{ user.name.charAt(0).toUpperCase() }}
+        </p>
+        } @else {
         <img
           src="assets/icons/user.svg"
           class="header__header-menu__menu-user__head-user__img"
           alt="user-icon"
         />
+        }
       </div>
     </div>
   </div>
+
+  <!--  Drop down-->
+
+  @if (dropdownState$ | async) {
+  <div class="drop-down">
+    <div class="drop-down__menu">
+      <div class="drop-down__menu__item">
+        <img
+          src="assets/icons/messages.svg"
+          class="drop-down__menu__item__img"
+          alt="user-icon"
+        />
+        <div class="drop-down__menu__item__text">Messages</div>
+      </div>
+      <div class="drop-down__menu__item">
+        <img
+          src="assets/icons/booking.svg"
+          class="drop-down__menu__item__img"
+          alt="user-icon"
+        />
+        <div class="drop-down__menu__item__text">Booking</div>
+      </div>
+      <div class="drop-down__menu__item">
+        <img
+          src="assets/icons/house.svg"
+          class="drop-down__menu__item__img"
+          alt="user-icon"
+        />
+        <div class="drop-down__menu__item__text">My Properties</div>
+      </div>
+      <div class="drop-down__menu__item">
+        <img
+          src="assets/icons/user.svg"
+          class="drop-down__menu__item__img"
+          alt="user-icon"
+        />
+        <div class="drop-down__menu__item__text">Profile</div>
+      </div>
+      <div class="drop-down__menu__item">
+        <img
+          src="assets/icons/settings.svg"
+          class="drop-down__menu__item__img"
+          alt="setting-icon"
+        />
+        <div class="drop-down__menu__item__text">Setting</div>
+      </div>
+      <div class="drop-down__menu__item" (click)="logOut()">
+        <img
+          src="assets/icons/logout.svg"
+          class="drop-down__menu__item__img"
+          alt="logout-icon"
+        />
+        <div class="drop-down__menu__item__text">Logout</div>
+      </div>
+    </div>
+  </div>
+  }
 </div>

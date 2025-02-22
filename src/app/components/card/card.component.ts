@@ -15,10 +15,13 @@ export class CardComponent {
   env = environment;
   router = inject(Router);
 
+  ngOnInit(): void {
+    console.log(this.property().propertyImages[0]?.url ?? '');
+  }
   image = computed(() => {
-    const extractedImage = this.property().propertyImages[0].url;
+    const extractedImage = this.property().propertyImages[0]?.url ?? '';
     const removedDot = extractedImage.slice(1);
-    return this.env.imageRoot + removedDot;
+    return this.env.imageRoot + extractedImage;
   });
 
   goToPropertyDetails(id: string): void {
