@@ -58,22 +58,25 @@
         />
         <div class="drop-down__menu__item__text">Messages</div>
       </div>
-      <div class="drop-down__menu__item">
+      <div class="drop-down__menu__item" (click)="navigateToBooking()">
         <img
           src="assets/icons/booking.svg"
           class="drop-down__menu__item__img"
           alt="user-icon"
         />
-        <div class="drop-down__menu__item__text">Booking</div>
+        <div class="drop-down__menu__item__text">My Reservations</div>
       </div>
-      <div class="drop-down__menu__item">
+      @if (user.role === 'HOSTER') {
+      <div class="drop-down__menu__item" (click)="navigateToMyGuests()">
         <img
           src="assets/icons/house.svg"
           class="drop-down__menu__item__img"
           alt="user-icon"
         />
-        <div class="drop-down__menu__item__text">My Properties</div>
+        <div class="drop-down__menu__item__text">My Guests</div>
       </div>
+      }
+
       <div class="drop-down__menu__item">
         <img
           src="assets/icons/user.svg"

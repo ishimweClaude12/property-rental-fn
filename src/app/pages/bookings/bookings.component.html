@@ -1,0 +1,69 @@
+<div
+  class="overflow-x-auto p-4"
+  *ngIf="data$ | async as data; else EMPTY_TABLE"
+>
+  @if (data.length) {
+  <table class="w-full border-collapse border border-gray-300">
+    <thead>
+      <tr class="bg-[#225395] text-white">
+        <th class="p-2 border">Hoster Name</th>
+        <th class="p-2 border">Property Name</th>
+        <th class="p-2 border">Rooms</th>
+        <th class="p-2 border">Price</th>
+        <th class="p-2 border">Bath rooms</th>
+        <th class="p-2 border">Guests</th>
+        <th class="p-2 border">Location</th>
+        <th class="p-2 border">Checkin</th>
+        <th class="p-2 border">Check out</th>
+        <th class="p-2 border">Booking status</th>
+        <th class="p-2 border">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let property of data; let index = index"
+        [ngClass]="{
+          'bg-[#6896D4]': index % 2 === 0,
+          'bg-[#789ccc]': index % 2 !== 0
+        }"
+      >
+        <td class="p-2 border">{{ property.hoster.name }}</td>
+        <td class="p-2 border">{{ property.property.title }}</td>
+        <td class="p-2 border text-center">{{ property.property.bedrooms }}</td>
+        <td class="p-2 border text-center">{{ property.totalPrice }}</td>
+        <td class="p-2 border text-center">
+          {{ property.property.bathrooms }}
+        </td>
+        <td class="p-2 border text-center">{{ property.guestCount }}</td>
+        <td class="p-2 border text-center">{{ property.property.location }}</td>
+        <td class="p-2 border text-center">{{ property.checkIn }}</td>
+        <td class="p-2 border text-center">
+          {{ property.checkOut }}
+        </td>
+        <td class="p-2 border text-center">{{ property.booking_status }}</td>
+        <td class="p-2 border text-center space-x-2">
+          <ng-container *ngIf="property.booking_status === 'PENDING'">
+            <button
+              class="bg-gray-500 text-white px-3 py-1 rounded"
+              (click)="cancelBooking(property.booking_id)"
+            >
+              Cancel
+            </button>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  } @else {
+  <div class="flex justify-center items-center h-[80vh]">
+    <p class="text-2xl">No bookings found</p>
+  </div>
+
+  }
+</div>
+
+<ng-template #EMPTY_TABLE>
+  <div class="flex justify-center items-center h-[80vh]">
+    <p class="text-2xl">No bookings found</p>
+  </div>
+</ng-template>

@@ -4,10 +4,11 @@ import {
   Property,
   PropertyResponse,
 } from '../../models/property-response.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
 import { ApiResponse } from '../../models/single-property-response.model';
 import { AmenityData, AmenityResponse } from '../../models/amenities.interface';
+import { SkipLoading } from '../../components/loader/skip-loading.component';
 
 @Injectable({
   providedIn: 'root',
@@ -17,17 +18,25 @@ export class PropertyService {
   env = environment;
   constructor() {}
 
-  loadAllProperties = async (
+  async loadAllProperties(
     page = 1,
     size = 1
-  ): Promise<PropertyResponse | undefined> => {
+  ): Promise<PropertyResponse | undefined> {
     const properties$ = this.http.get<PropertyResponse>(
-      `${this.env.apiRoot}/property`
+      `${this.env.apiRoot}/property`,
+      {
+        context: new HttpContext().set(SkipLoading, true), // Correctly set the SkipLoading token
+      }
     );
 
-    const response = await firstValueFrom(properties$);
-    return response;
-  };
+    try {
+      const response = await firstValueFrom(properties$);
+      return response;
+    } catch (error) {
+      console.error('Error loading properties:', error);
+      return undefined;
+    }
+  }
 
   createProperty(
     property: Partial<Property>

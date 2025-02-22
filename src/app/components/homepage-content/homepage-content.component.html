@@ -5,11 +5,20 @@
   <div class="content__cards">
     @for (property of properties(); track property.property_id) {
     <app-card [property]="property" />
+
     }
   </div>
   } @if(loadingService.loading() === false && properties() &&
   properties().length <= 0) {
-  <div class="content__error">No properties found</div>
+  <div class="content__cards">
+    <app-card-skeleton
+      *ngFor="
+        let card of [
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 22, 21, 23, 24, 25, 26, 31, 13
+        ]
+      "
+    ></app-card-skeleton>
+  </div>
   } @if(properties() && properties().length > 0) {
 
   <div

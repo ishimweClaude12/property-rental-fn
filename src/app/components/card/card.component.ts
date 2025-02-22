@@ -2,11 +2,12 @@ import { Component, computed, inject, input, OnInit } from '@angular/core';
 import { Property } from '../../models/property-response.model';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { CardSkeletonComponent } from '../card-skeleton/card-skeleton.component';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [],
+  imports: [CardSkeletonComponent],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })

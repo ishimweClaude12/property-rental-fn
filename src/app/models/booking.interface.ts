@@ -22,7 +22,6 @@ export interface BookingRequest {
   guestCount: number;
 }
 
-
 export interface BookingResponse {
   success: boolean;
   message: string;
