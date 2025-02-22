@@ -17,10 +17,11 @@ import { LoadingService } from '../../services/loader/loading.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/counter/app/app.reducer';
+import { CardSkeletonComponent } from '../card-skeleton/card-skeleton.component';
 @Component({
   selector: 'app-homepage-content',
   standalone: true,
-  imports: [CardComponent, CommonModule],
+  imports: [CardComponent, CommonModule, CardSkeletonComponent],
   templateUrl: './homepage-content.component.html',
   styleUrl: './homepage-content.component.scss',
 })

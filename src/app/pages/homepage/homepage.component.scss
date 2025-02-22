@@ -15,11 +15,11 @@
     width: 100%;
     top: 0;
     left: 0;
-    padding: 10px 27px;
+    padding: 10px 8px;
     z-index: 60;
 
     @include respond-to-min("md") {
-      padding: 22px 100px;
+      padding: 22px 0;
     }
   }
 }

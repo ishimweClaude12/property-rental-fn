@@ -48,4 +48,12 @@ export class HeaderComponent {
     event.stopPropagation();
     this.store.dispatch(appActions.closeDropdown());
   }
+
+  navigateToBooking(): void {
+    this.router.navigate(['/home/host-booking']);
+  }
+
+  navigateToMyGuests(): void {
+    this.router.navigate(['/home/my-guests']);
+  }
 }

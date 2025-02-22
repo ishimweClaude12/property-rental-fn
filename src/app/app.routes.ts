@@ -8,6 +8,8 @@ import { propertyResolver } from './pages/single-property/single-property.resolv
 import { CreatePropertyComponent } from './pages/create-property/create-property.component';
 import { AddImagesComponent } from './pages/add-images/add-images.component';
 import { AddAmenitiesComponent } from './pages/add-amenities/add-amenities.component';
+import { BookingsComponent } from './pages/bookings/bookings.component';
+import { MyGuestsComponent } from './pages/my-guests/my-guests.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +34,14 @@ export const routes: Routes = [
       {
         path: 'create-amenities/:id',
         component: AddAmenitiesComponent,
+      },
+      {
+        path: 'host-booking',
+        component: BookingsComponent,
+      },
+      {
+        path: 'my-guests',
+        component: MyGuestsComponent,
       },
     ],
   },
