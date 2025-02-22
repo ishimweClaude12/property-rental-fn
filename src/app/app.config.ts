@@ -13,18 +13,20 @@ import {
 } from '@angular/common/http';
 import { loadingInterceptor } from './interceptors/loading.interceptor';
 import { provideToastr } from 'ngx-toastr';
+import { authInterceptor } from './interceptors/auth/auth.interceptor';
+import { appReducer } from './store/counter/app/app.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideStore(),
-    provideState({ name: 'counter', reducer: counterReducer }),
+    provideState({ name: 'app', reducer: appReducer }),
     provideStoreDevtools({
       maxAge: 25, // Retains last 25 states
       logOnly: true, // Restrict extension to log-only mode in production
     }),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimations(), // required animations providers
     provideToastr(),
     provideHttpClient(withFetch(), withInterceptors([loadingInterceptor])),

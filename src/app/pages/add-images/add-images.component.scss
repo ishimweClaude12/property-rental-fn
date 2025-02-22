@@ -1,0 +1,11 @@
+.file-input {
+  opacity: 0;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.custom-height {
+  min-height: 80vh;
+}

@@ -109,7 +109,7 @@ export class SignInComponent {
         localStorage.setItem('user', JSON.stringify(data.user));
         localStorage.setItem('role', data?.user?.role ?? '');
         this.toastr.success(data.message);
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       },
       (error) => {
         this.isLoading = false;
