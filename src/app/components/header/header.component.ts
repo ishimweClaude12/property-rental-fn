@@ -56,4 +56,9 @@ export class HeaderComponent {
   navigateToMyGuests(): void {
     this.router.navigate(['/home/my-guests']);
   }
+
+  navigateToHome(event: Event) {
+    event.stopPropagation();
+    this.router.navigate(['/home']);
+  }
 }

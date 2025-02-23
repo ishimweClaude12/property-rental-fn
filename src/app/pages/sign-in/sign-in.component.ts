@@ -43,9 +43,9 @@ export class SignInComponent {
           Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/),
         ],
       ],
-      confirmPassword: ['', [Validators.required]],
+    
     },
-    { validators: this.passwordMatchValidator }
+
   );
 
   constructor(

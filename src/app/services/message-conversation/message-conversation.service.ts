@@ -13,21 +13,20 @@ import { firstValueFrom } from 'rxjs';
 export class MessageConversationService {
   http = inject(HttpClient);
   env = environment;
-  private headers = new HttpHeaders({
-    Authorization: `Bearer ${this.env.apiToken}`,
-  });
   token = localStorage.getItem('token');
+
+  private headers = new HttpHeaders({
+    Authorization: `Bearer ${this.token}`,
+  });
 
   constructor() {}
 
   postConversation = async (
     propertyId: string
   ): Promise<ConversationResponse> => {
-    // if (!this.token) {
-    //   throw new Error('No token found');
-    // }
+    const token = localStorage.getItem('token');
     const headers = {
-      Authorization: `Bearer ${this.env.apiToken}`,
+      Authorization: `Bearer ${token}`,
     };
 
     const conversation$ = this.http.post<ConversationResponse>(
@@ -45,8 +44,9 @@ export class MessageConversationService {
     conversationId: string,
     content: string
   ): Promise<MessageResponse> => {
+    const token = localStorage.getItem('token');
     const headers = {
-      Authorization: `Bearer ${this.env.apiToken}`,
+      Authorization: `Bearer ${token}`,
     };
     const message$ = this.http.post<MessageResponse>(
       `${this.env.apiRoot}/message`,

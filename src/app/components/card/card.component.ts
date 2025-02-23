@@ -18,10 +18,7 @@ export class CardComponent {
 
   image = computed(() => {
     const extractedImage = this.property().propertyImages[0]?.url ?? '';
-    console.log({
-      extractedImage: extractedImage,
-      'Whole image': this.env.imgRoot + extractedImage,
-    });
+
     return extractedImage;
   });
 

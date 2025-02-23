@@ -37,25 +37,6 @@
       (trailingIconClick)="showPassword($event)"
     ></app-input>
 
-    <app-input
-      type="PASSWORD"
-      id="confirmPsw"
-      formControlName="confirmPassword"
-      name="confirmPsw"
-      [hasLabel]="true"
-      label="Confirm Password"
-      [hasError]="isControleInvalid('confirmPassword')"
-      error="Password does not match"
-      [hasTrailingIcon]="true"
-      placeholder="Enter your password"
-      [trailingIcon]="
-        ConfirmPasswordVisible
-          ? './assets/icons/eye.svg'
-          : './assets/icons/eye-slash.svg'
-      "
-      (trailingIconClick)="showConfirmPassword($event)"
-    ></app-input>
-
     <app-button
       type="Active"
       label="Sign In"
